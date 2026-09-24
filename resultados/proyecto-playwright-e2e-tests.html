@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reporte de tests inestables</title>
+<style>
+  :root {
+    --fondo: #f6f7f9;
+    --tarjeta: #ffffff;
+    --texto: #1c2430;
+    --tenue: #6b7685;
+    --borde: #e3e7ec;
+    --flaky: #c2410c;
+    --estable: #15803d;
+    --determinista: #b91c1c;
+    --excluido: #6b7280;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fondo: #12161c;
+      --tarjeta: #1b2129;
+      --texto: #e6e9ee;
+      --tenue: #95a0ae;
+      --borde: #2b333d;
+      --flaky: #fb923c;
+      --estable: #4ade80;
+      --determinista: #f87171;
+      --excluido: #9ca3af;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 16px;
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .contenedor { max-width: 1000px; margin: 0 auto; }
+  h1 { margin: 0 0 4px; font-size: 26px; }
+  .subtitulo { color: var(--tenue); margin: 0 0 24px; font-size: 14px; }
+  .tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .tarjeta {
+    background: var(--tarjeta);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .tarjeta .valor { font-size: 30px; font-weight: 700; }
+  .tarjeta .nombre { color: var(--tenue); font-size: 13px; margin-top: 4px; }
+  .tarjeta.flaky .valor { color: var(--flaky); }
+  .tarjeta.estable .valor { color: var(--estable); }
+  .tarjeta.fallo-determinista .valor { color: var(--determinista); }
+  .tarjeta.excluido .valor { color: var(--excluido); }
+  .tabla-envoltura {
+    background: var(--tarjeta);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    overflow-x: auto;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--borde); }
+  th { color: var(--tenue); font-weight: 600; font-size: 12px; text-transform: uppercase; }
+  tr:last-child td { border-bottom: none; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .titulo { font-weight: 600; }
+  .archivo { color: var(--tenue); font-size: 12px; margin-top: 2px; font-family: ui-monospace, monospace; }
+  .etiqueta {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid currentColor;
+    white-space: nowrap;
+  }
+  .etiqueta.flaky { color: var(--flaky); }
+  .etiqueta.estable { color: var(--estable); }
+  .etiqueta.fallo-determinista { color: var(--determinista); }
+  .etiqueta.excluido { color: var(--excluido); }
+  .celda-tasa { display: flex; align-items: center; gap: 10px; min-width: 170px; }
+  .barra-fondo { flex: 1; height: 8px; background: var(--borde); border-radius: 999px; overflow: hidden; }
+  .barra { height: 100%; background: var(--flaky); }
+  .porcentaje { font-variant-numeric: tabular-nums; font-weight: 600; min-width: 48px; text-align: right; }
+  .nota { color: var(--tenue); font-size: 12px; margin-top: 16px; }
+</style>
+</head>
+<body>
+  <div class="contenedor">
+    <h1>Reporte de tests inestables</h1>
+    <p class="subtitulo">Generado: 24/9/2026, 2:36:57 p.m. · Repeticiones por test: 5</p>
+
+    <div class="tarjetas">
+      <div class="tarjeta flaky"><div class="valor">0</div><div class="nombre">Flaky</div></div>
+      <div class="tarjeta fallo-determinista"><div class="valor">0</div><div class="nombre">Fallo determinista</div></div>
+      <div class="tarjeta estable"><div class="valor">70</div><div class="nombre">Estables</div></div>
+      <div class="tarjeta excluido"><div class="valor">0</div><div class="nombre">Excluidos</div></div>
+    </div>
+
+    <div class="tabla-envoltura">
+      <table>
+        <thead>
+          <tr>
+            <th class="num">#</th>
+            <th>Test</th>
+            <th>Clasificación</th>
+            <th class="num">Pasó</th>
+            <th class="num">Falló</th>
+            <th class="num">Total</th>
+            <th>Tasa de inestabilidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+    <tr>
+      <td class="num">1</td>
+      <td>
+        <div class="titulo">User is not able to login with empty username @login</div>
+        <div class="archivo">login.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td>
+        <div class="titulo">Administrator is able to login with correct username and password @sanity @login</div>
+        <div class="archivo">login.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td>
+        <div class="titulo">User is not able to login with empty password @login</div>
+        <div class="archivo">login.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td>
+        <div class="titulo">User is not able to login with wrong password @login</div>
+        <div class="archivo">login.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td>
+        <div class="titulo">User must be able to create new Single room named 114 by filling up all mandatory fields @sanity @management @room-management</div>
+        <div class="archivo">room-management.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td>
+        <div class="titulo">User must be able to create new Twin room named 115 by filling up all mandatory fields @sanity @management @room-management</div>
+        <div class="archivo">room-management.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td>
+        <div class="titulo">User must be able to create new Double room named 116 by filling up all mandatory fields @sanity @management @room-management</div>
+        <div class="archivo">room-management.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td>
+        <div class="titulo">User must be able to create new Family room named 117 by filling up all mandatory fields @sanity @management @room-management</div>
+        <div class="archivo">room-management.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td>
+        <div class="titulo">User must NOT be able to create new room without filling up room name field @management @room-management</div>
+        <div class="archivo">room-management.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td>
+        <div class="titulo">User must be able to create new Suite room named 118 by filling up all mandatory fields @sanity @management @room-management</div>
+        <div class="archivo">room-management.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td>
+        <div class="titulo">Visitor must be able to contact the property by filling up all mandatory fields @sanity @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td>
+        <div class="titulo">User must NOT be able to create new room with price 0 @management @room-management</div>
+        <div class="archivo">room-management.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property without filling up name field @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">14</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property without filling up email field @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">15</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property without filling up phone field @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">16</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property without filling up subject field @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">17</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up email with invalid value: plainaddress @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">18</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property without filling up message field @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">19</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up email with invalid value: #@%^%#$@#$@#.com @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">20</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up email with invalid value: @example.com Joe Smith @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">21</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up email with invalid value: &lt;email@example.com&gt; @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">22</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up email with invalid value: email.example.com @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">23</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up email with invalid value: email@example@example.com @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">24</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up email with invalid value: .email@example.com @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">25</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up email with invalid value: email..email@example.com @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">26</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up email with invalid value: email@-example.com @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">27</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up email with invalid value: email@example.com (Joe Smith) @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">28</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up email with invalid value: Abc..123@example.com @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">29</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up email with invalid value: email@example..com @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">30</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up the phone with invalid length, less than 11 and more than 21 characters: 1234567890 @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">31</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up the phone with invalid length, less than 11 and more than 21 characters: 1234567890123456789012 @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">32</td>
+      <td>
+        <div class="titulo">Visitor must be able to contact the property by filling up phone with valid length, between 11 and 21 characters: 12345678901 @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">33</td>
+      <td>
+        <div class="titulo">Visitor must be able to contact the property by filling up phone with valid length, between 11 and 21 characters: 123456789012345678901 @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">34</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up the subject with invalid length value of 4, less than 5 and more than 100 characters @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">35</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up the subject with invalid length value of 101, less than 5 and more than 100 characters @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">36</td>
+      <td>
+        <div class="titulo">Visitor must be able to contact the property by filling up the subject with valid length value of 5, between 5 and 100 characters @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">37</td>
+      <td>
+        <div class="titulo">Visitor must be able to contact the property by filling up the subject with valid length value of 100, between 5 and 100 characters @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">38</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up the message with invalid length value of 2001, less than 20 and more than 2000 characters @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">39</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to contact the property by filling up the message with invalid length value of 19, less than 20 and more than 2000 characters @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">40</td>
+      <td>
+        <div class="titulo">Visitor must be able to contact the property by filling up the message with valid length value of 20, between 20 and 2000 characters @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">41</td>
+      <td>
+        <div class="titulo">Visitor must be able to contact the property by filling up the message with valid length value of 2000, between 20 and 2000 characters @contact</div>
+        <div class="archivo">contact-hotel.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">42</td>
+      <td>
+        <div class="titulo">Visitor must be able to book a room for available dates by filling up all mandatory fields @sanity @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">43</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room without filling up first name field @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">44</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up the first name with invalid length value of 2, less than 3 and more than 18 characters @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">45</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up the first name with invalid length value of 19, less than 3 and more than 18 characters @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">46</td>
+      <td>
+        <div class="titulo">Visitor must be able to book a room by filling up the first name with valid length value of 3, more than 3 and less than 18 characters @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">47</td>
+      <td>
+        <div class="titulo">Visitor must be able to book a room by filling up the first name with valid length value of 18, more than 3 and less than 18 characters @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">48</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room without filling up last name field @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">49</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up the last name with invalid length value of 2, less than 3 and more than 30 characters @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">50</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up the last name with invalid length value of 31, less than 3 and more than 30 characters @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">51</td>
+      <td>
+        <div class="titulo">Visitor must be able to book a room by filling up the last name with valid length value of 3, more than 3 and less than 30 characters @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">52</td>
+      <td>
+        <div class="titulo">Visitor must be able to book a room by filling up the last name with valid length value of 30, more than 3 and less than 30 characters @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">53</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room without filling up email field @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">54</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up email with invalid value: plainaddress @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">55</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up email with invalid value: #@%^%#$@#$@#.com @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">56</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up email with invalid value: @example.com Joe Smith @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">57</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up email with invalid value: &lt;email@example.com&gt; @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">58</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up email with invalid value: email.example.com @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">59</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up email with invalid value: .email@example.com @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">60</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up email with invalid value: email@example@example.com @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">61</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up email with invalid value: email..email@example.com @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">62</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up email with invalid value: email@example.com (Joe Smith) @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">63</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up email with invalid value: email@example..com @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">64</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up email with invalid value: email@-example.com @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">65</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room without filling up phone field @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">66</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up email with invalid value: Abc..123@example.com @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">67</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up the phone with invalid length value of 10, less than 11 and more than 21 characters @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">68</td>
+      <td>
+        <div class="titulo">Visitor must NOT be able to book a room by filling up the phone with invalid length value of 22, less than 11 and more than 21 characters @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">69</td>
+      <td>
+        <div class="titulo">Visitor must be able to book a room by filling up the phone with valid length value of 11, more than 11 and less than 21 characters @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">70</td>
+      <td>
+        <div class="titulo">Visitor must be able to book a room by filling up the phone with valid length value of 21, more than 11 and less than 21 characters @booking</div>
+        <div class="archivo">room-booking.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">5</td>
+      <td class="num">0</td>
+      <td class="num">5</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="nota">
+      Tasa de inestabilidad = proporción de resultados que no coinciden con el resultado mayoritario.
+      Con dos resultados posibles (pasa/falla), el valor máximo es 50%. Tests omitidos (skip), no analizados: 3.
+    </p>
+  </div>
+</body>
+</html>

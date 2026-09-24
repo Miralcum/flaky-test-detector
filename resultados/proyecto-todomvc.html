@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reporte de tests inestables</title>
+<style>
+  :root {
+    --fondo: #f6f7f9;
+    --tarjeta: #ffffff;
+    --texto: #1c2430;
+    --tenue: #6b7685;
+    --borde: #e3e7ec;
+    --flaky: #c2410c;
+    --estable: #15803d;
+    --determinista: #b91c1c;
+    --excluido: #6b7280;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fondo: #12161c;
+      --tarjeta: #1b2129;
+      --texto: #e6e9ee;
+      --tenue: #95a0ae;
+      --borde: #2b333d;
+      --flaky: #fb923c;
+      --estable: #4ade80;
+      --determinista: #f87171;
+      --excluido: #9ca3af;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 16px;
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .contenedor { max-width: 1000px; margin: 0 auto; }
+  h1 { margin: 0 0 4px; font-size: 26px; }
+  .subtitulo { color: var(--tenue); margin: 0 0 24px; font-size: 14px; }
+  .tarjetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .tarjeta {
+    background: var(--tarjeta);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .tarjeta .valor { font-size: 30px; font-weight: 700; }
+  .tarjeta .nombre { color: var(--tenue); font-size: 13px; margin-top: 4px; }
+  .tarjeta.flaky .valor { color: var(--flaky); }
+  .tarjeta.estable .valor { color: var(--estable); }
+  .tarjeta.fallo-determinista .valor { color: var(--determinista); }
+  .tarjeta.excluido .valor { color: var(--excluido); }
+  .tabla-envoltura {
+    background: var(--tarjeta);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    overflow-x: auto;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--borde); }
+  th { color: var(--tenue); font-weight: 600; font-size: 12px; text-transform: uppercase; }
+  tr:last-child td { border-bottom: none; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .titulo { font-weight: 600; }
+  .archivo { color: var(--tenue); font-size: 12px; margin-top: 2px; font-family: ui-monospace, monospace; }
+  .etiqueta {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid currentColor;
+    white-space: nowrap;
+  }
+  .etiqueta.flaky { color: var(--flaky); }
+  .etiqueta.estable { color: var(--estable); }
+  .etiqueta.fallo-determinista { color: var(--determinista); }
+  .etiqueta.excluido { color: var(--excluido); }
+  .celda-tasa { display: flex; align-items: center; gap: 10px; min-width: 170px; }
+  .barra-fondo { flex: 1; height: 8px; background: var(--borde); border-radius: 999px; overflow: hidden; }
+  .barra { height: 100%; background: var(--flaky); }
+  .porcentaje { font-variant-numeric: tabular-nums; font-weight: 600; min-width: 48px; text-align: right; }
+  .nota { color: var(--tenue); font-size: 12px; margin-top: 16px; }
+</style>
+</head>
+<body>
+  <div class="contenedor">
+    <h1>Reporte de tests inestables</h1>
+    <p class="subtitulo">Generado: 24/9/2026, 2:14:49 p.m. · Repeticiones por test: 50</p>
+
+    <div class="tarjetas">
+      <div class="tarjeta flaky"><div class="valor">0</div><div class="nombre">Flaky</div></div>
+      <div class="tarjeta fallo-determinista"><div class="valor">0</div><div class="nombre">Fallo determinista</div></div>
+      <div class="tarjeta estable"><div class="valor">26</div><div class="nombre">Estables</div></div>
+      <div class="tarjeta excluido"><div class="valor">0</div><div class="nombre">Excluidos</div></div>
+    </div>
+
+    <div class="tabla-envoltura">
+      <table>
+        <thead>
+          <tr>
+            <th class="num">#</th>
+            <th>Test</th>
+            <th>Clasificación</th>
+            <th class="num">Pasó</th>
+            <th class="num">Falló</th>
+            <th class="num">Total</th>
+            <th>Tasa de inestabilidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+    <tr>
+      <td class="num">1</td>
+      <td>
+        <div class="titulo">should clear text input field when an item is added</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">2</td>
+      <td>
+        <div class="titulo">should allow me to add todo items</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">3</td>
+      <td>
+        <div class="titulo">should append new items to the bottom of the list</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">4</td>
+      <td>
+        <div class="titulo">should allow me to mark all items as completed</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">5</td>
+      <td>
+        <div class="titulo">should allow me to clear the complete state of all items</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">6</td>
+      <td>
+        <div class="titulo">should allow me to mark items as complete</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">7</td>
+      <td>
+        <div class="titulo">should allow me to un-mark items as complete</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">8</td>
+      <td>
+        <div class="titulo">complete all checkbox should update state when items are completed / cleared</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">9</td>
+      <td>
+        <div class="titulo">should hide other controls when editing</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">10</td>
+      <td>
+        <div class="titulo">should allow me to edit an item</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">11</td>
+      <td>
+        <div class="titulo">should save edits on blur</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">12</td>
+      <td>
+        <div class="titulo">should trim entered text</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">13</td>
+      <td>
+        <div class="titulo">should display the current number of todo items</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">14</td>
+      <td>
+        <div class="titulo">should remove the item if an empty text string was entered</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">15</td>
+      <td>
+        <div class="titulo">should cancel edits on escape</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">16</td>
+      <td>
+        <div class="titulo">should display the correct text</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">17</td>
+      <td>
+        <div class="titulo">should remove completed items when clicked</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">18</td>
+      <td>
+        <div class="titulo">should be hidden when there are no items that are completed</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">19</td>
+      <td>
+        <div class="titulo">should persist its data</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">20</td>
+      <td>
+        <div class="titulo">should allow me to display active items</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">21</td>
+      <td>
+        <div class="titulo">should allow me to display completed items</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">22</td>
+      <td>
+        <div class="titulo">should respect the back button</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">23</td>
+      <td>
+        <div class="titulo">should highlight the currently applied filter</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">24</td>
+      <td>
+        <div class="titulo">should allow me to display all items</div>
+        <div class="archivo">demo-todo-app.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">25</td>
+      <td>
+        <div class="titulo">has title</div>
+        <div class="archivo">example.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="num">26</td>
+      <td>
+        <div class="titulo">get started link</div>
+        <div class="archivo">example.spec.ts · chromium</div>
+      </td>
+      <td><span class="etiqueta estable">Estable</span></td>
+      <td class="num">50</td>
+      <td class="num">0</td>
+      <td class="num">50</td>
+      <td>
+        <div class="celda-tasa">
+          <div class="barra-fondo"><div class="barra" style="width: 0%"></div></div>
+          <span class="porcentaje">0.0%</span>
+        </div>
+      </td>
+    </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="nota">
+      Tasa de inestabilidad = proporción de resultados que no coinciden con el resultado mayoritario.
+      Con dos resultados posibles (pasa/falla), el valor máximo es 50%.
+    </p>
+  </div>
+</body>
+</html>

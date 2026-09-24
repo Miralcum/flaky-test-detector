@@ -1,0 +1,20 @@
+# Dependencias y compilados (se regeneran con npm install y npm run build)
+node_modules/
+dist/
+*.tgz
+
+# Salidas de Playwright
+test-results/
+playwright-report/
+blob-report/
+
+# Salidas temporales del detector y de los scripts
+# (las versiones finales están copiadas en resultados/)
+runs/
+flaky-report/
+run-result.json
+reporte.json
+reporte.html
+evaluacion.json
+evaluacion.csv
+comparacion-retries-*.json

@@ -1,0 +1,6 @@
+{
+  "excluir": {
+    "titulos": [],
+    "archivos": ["always-fail.spec.ts"]
+  }
+}

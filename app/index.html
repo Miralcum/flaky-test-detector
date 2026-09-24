@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>App de prueba</title>
+</head>
+<body>
+  <h1>App de prueba para flakiness</h1>
+
+  <section>
+    <h2>1. Mensaje con retraso</h2>
+    <button id="mostrar">Mostrar mensaje</button>
+    <div id="mensaje" hidden>Mensaje listo</div>
+  </section>
+
+  <section>
+    <h2>2. Carrera entre dos tareas</h2>
+    <div id="orden"></div>
+    <div id="carrera-lista" hidden>Carrera terminada</div>
+  </section>
+
+  <section>
+    <h2>3. Datos por red</h2>
+    <button id="cargar">Cargar datos</button>
+    <div id="datos"></div>
+  </section>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const num = (nombre, defecto) => Number(params.get(nombre) ?? defecto);
+
+    document.getElementById('mostrar').addEventListener('click', () => {
+      setTimeout(() => {
+        document.getElementById('mensaje').hidden = false;
+      }, Math.random() * num('maxRetraso', 100));
+    });
+
+    const orden = document.getElementById('orden');
+    let terminadas = 0;
+    function tarea(letra, maxMs) {
+      setTimeout(() => {
+        orden.textContent += letra;
+        terminadas++;
+        if (terminadas === 2) {
+          document.getElementById('carrera-lista').hidden = false;
+        }
+      }, Math.random() * maxMs);
+    }
+    tarea('A', num('maxA', 20));
+    tarea('B', num('maxB', 20));
+
+    document.getElementById('cargar').addEventListener('click', async () => {
+      const respuesta = await fetch('/api/datos');
+      const json = await respuesta.json();
+      document.getElementById('datos').textContent = json.mensaje;
+    });
+  </script>
+</body>
+</html>

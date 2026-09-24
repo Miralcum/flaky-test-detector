@@ -1,0 +1,40 @@
+{
+  "name": "flaky-test-detector",
+  "version": "0.1.1",
+  "description": "Detector de tests inestables (flaky) para suites de Playwright mediante reejecución controlada",
+  "main": "dist/reporter.js",
+  "bin": {
+    "flaky-detector": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepack": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run-n": "tsx scripts/run-n-times.ts",
+    "calcular": "tsx scripts/calcular-flakiness.ts",
+    "run-paralelo": "tsx scripts/run-paralelo.ts",
+    "html": "tsx scripts/generar-html.ts",
+    "evaluar": "tsx scripts/evaluar.ts",
+    "comparar": "tsx scripts/comparar-retries.ts"
+  },
+  "keywords": [
+    "playwright",
+    "flaky",
+    "testing",
+    "e2e"
+  ],
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "@playwright/test": ">=1.42.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
