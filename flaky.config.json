@@ -1,6 +1,6 @@
 {
   "excluir": {
-    "titulos": [],
+    "titulos": ["espera fija de 30ms con retraso 0-100ms"],
     "archivos": ["always-fail.spec.ts"]
   }
 }
