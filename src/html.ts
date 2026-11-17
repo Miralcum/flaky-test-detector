@@ -10,7 +10,7 @@ function escaparHtml(texto: string): string {
 }
 
 const etiquetas: Record<string, string> = {
-  'flaky': 'Flaky',
+  'flaky': 'No determinista',
   'estable': 'Estable',
   'fallo-determinista': 'Fallo determinista',
   'excluido': 'Excluido',
@@ -28,7 +28,7 @@ function filaTest(t: EstadisticaTest, posicion: number): string {
         <div class="titulo">${escaparHtml(t.titulo)}</div>
         <div class="archivo">${escaparHtml(path.basename(t.archivo))}${proyecto}</div>
       </td>
-      <td><span class="etiqueta ${t.clasificacion}">${etiquetas[t.clasificacion] ?? t.clasificacion}</span>${t.altaInestabilidad ? ` <span class="etiqueta fallo-determinista">Alta</span>` : ``}</td>
+      <td><span class="etiqueta ${t.clasificacion}">${etiquetas[t.clasificacion] ?? t.clasificacion}</span>${t.altaInestabilidad ? ` <span class="etiqueta fallo-determinista">Inestable</span>` : ``}</td>
       <td class="num">${t.passed}</td>
       <td class="num">${t.failed}</td>
       <td class="num">${t.totalCorridas}</td>
@@ -144,7 +144,7 @@ export function generarHtml(reporte: Reporte): string {
     <p class="subtitulo">Generado: ${fecha} · Repeticiones por test: ${reporte.repeticiones}</p>
 
     <div class="tarjetas">
-      <div class="tarjeta flaky"><div class="valor">${reporte.resumen.flaky}</div><div class="nombre">Flaky</div></div>
+      <div class="tarjeta flaky"><div class="valor">${reporte.resumen.flaky}</div><div class="nombre">No deterministas</div></div>
       <div class="tarjeta fallo-determinista"><div class="valor">${reporte.resumen.falloDeterminista}</div><div class="nombre">Fallo determinista</div></div>
       <div class="tarjeta estable"><div class="valor">${reporte.resumen.estables}</div><div class="nombre">Estables</div></div>
       <div class="tarjeta excluido"><div class="valor">${reporte.resumen.excluidos}</div><div class="nombre">Excluidos</div></div>

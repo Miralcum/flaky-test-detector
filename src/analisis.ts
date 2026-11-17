@@ -120,14 +120,14 @@ export function imprimirResumen(reporte: Reporte): void {
       const prefijo = conPorcentaje
         ? `${(t.tasaInestabilidad * 100).toFixed(1).padStart(5)}%  |`
         : '        |';
-      const alta = t.altaInestabilidad ? '  [ALTA]' : '';
+      const alta = t.altaInestabilidad ? '  [INESTABLE]' : '';
       const timeouts = t.otros > 0 ? `, ${t.otros} por timeout/interrupción` : '';
       console.log(`${prefijo}  ${t.titulo}  (${t.passed} passed / ${t.failed} failed de ${t.totalCorridas}${timeouts})${alta}`);
     }
   }
 
   console.log(
-    `\n${reporte.resumen.altaInestabilidad} de ${reporte.resumen.flaky} tests flaky tienen alta inestabilidad (tasa >= ${(reporte.umbral * 100).toFixed(0)}%)`
+    `\n${reporte.resumen.altaInestabilidad} de ${reporte.resumen.flaky} tests flaky son pruebas inestables (tasa >= ${(reporte.umbral * 100).toFixed(0)}%)`
   );
   if (reporte.resumen.omitidos > 0) {
     console.log(`(${reporte.resumen.omitidos} tests omitidos con skip: no se ejecutaron y no se analizaron)`);
