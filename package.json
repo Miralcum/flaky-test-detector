@@ -1,6 +1,6 @@
 {
   "name": "flaky-test-detector",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Detector de tests inestables (flaky) para suites de Playwright mediante reejecución controlada",
   "main": "dist/reporter.js",
   "bin": {

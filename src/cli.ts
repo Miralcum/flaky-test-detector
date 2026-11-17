@@ -14,12 +14,13 @@ Uso:
   flaky-detector [opciones]
 
 Opciones:
-  -n, --n <número>         Repeticiones por test (mínimo 2, por defecto 20)
+  -n, --n <número>         Repeticiones por test (mínimo 5, por defecto 20)
   -w, --workers <número>   Workers en paralelo (por defecto, lo que decida Playwright)
   -p, --project <nombre>   Analizar solo un proyecto de Playwright
       --excluir <archivo>  Archivo de exclusiones (por defecto flaky.config.json)
   -o, --salida <carpeta>   Carpeta de resultados (por defecto flaky-report)
       --estricto           Terminar con error si se encuentra al menos un test flaky
+      --umbral <número>    Tasa mínima para marcar alta inestabilidad (por defecto 0.3)
   -h, --help               Mostrar esta ayuda
 
 Ejemplo:
@@ -35,6 +36,7 @@ function main(): void {
       excluir: { type: 'string', default: 'flaky.config.json' },
       salida: { type: 'string', short: 'o', default: 'flaky-report' },
       estricto: { type: 'boolean', default: false },
+      umbral: { type: 'string', default: '0.3' },
       help: { type: 'boolean', short: 'h', default: false },
     },
   });
@@ -45,8 +47,8 @@ function main(): void {
   }
 
   const n = Number(values.n);
-  if (!Number.isInteger(n) || n < 2) {
-    console.error('Error: --n debe ser un número entero de al menos 2.');
+  if (!Number.isInteger(n) || n < 5) {
+    console.error('Error: --n debe ser un número entero de al menos 5.');
     process.exit(1);
   }
 
@@ -92,7 +94,7 @@ function main(): void {
   }
 
   const corrida: Corrida = JSON.parse(fs.readFileSync(rutaCrudos, 'utf-8'));
-  const reporte = analizar(corrida, cargarConfigExclusion(values.excluir));
+  const reporte = analizar(corrida, cargarConfigExclusion(values.excluir), Number(values.umbral));
 
   imprimirResumen(reporte);
 

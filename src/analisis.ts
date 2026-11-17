@@ -35,7 +35,7 @@ function clasificar(passed: number, total: number, excluido: boolean): Clasifica
   return 'flaky';
 }
 
-export function analizar(corrida: Corrida, config: ConfigExclusion): Reporte {
+export function analizar(corrida: Corrida, config: ConfigExclusion, umbral = 0.3): Reporte {
   // Un resultado 'skipped' no es éxito ni fallo: el test no se ejecutó
   const ejecutados = corrida.resultados.filter((r) => r.status !== 'skipped');
   const clavesEjecutadas = new Set(ejecutados.map((r) => r.clave));
@@ -45,7 +45,6 @@ export function analizar(corrida: Corrida, config: ConfigExclusion): Reporte {
       .map((r) => r.clave)
   );
 
-  // Agrupar por clave estable del test
   const porTest = new Map<string, ResultadoTest[]>();
   for (const r of ejecutados) {
     if (!porTest.has(r.clave)) {
@@ -62,6 +61,7 @@ export function analizar(corrida: Corrida, config: ConfigExclusion): Reporte {
     const otros = resultados.filter((r) => r.status !== 'passed' && r.status !== 'failed').length;
     const tasa = Math.min(passed, noPasaron) / total;
     const primero = resultados[0];
+    const clasificacion = clasificar(passed, total, estaExcluido(primero.titulo, primero.archivo, config));
 
     estadisticas.push({
       clave,
@@ -73,7 +73,9 @@ export function analizar(corrida: Corrida, config: ConfigExclusion): Reporte {
       failed: noPasaron,
       otros,
       tasaInestabilidad: tasa,
-      clasificacion: clasificar(passed, total, estaExcluido(primero.titulo, primero.archivo, config)),
+      clasificacion,
+      // Equivale a PruebaInestable en la ontología
+      altaInestabilidad: clasificacion === 'flaky' && tasa >= umbral,
     });
   }
 
@@ -86,11 +88,13 @@ export function analizar(corrida: Corrida, config: ConfigExclusion): Reporte {
   return {
     generado: new Date().toISOString(),
     repeticiones: Math.max(0, ...estadisticas.map((e) => e.totalCorridas)),
+    umbral,
     resumen: {
       flaky: flaky.length,
       falloDeterminista: deterministas.length,
       estables: estables.length,
       excluidos: excluidos.length,
+      altaInestabilidad: flaky.filter((t) => t.altaInestabilidad).length,
       omitidos: clavesOmitidas.size,
     },
     tests: [...flaky, ...deterministas, ...estables, ...excluidos],
@@ -116,17 +120,20 @@ export function imprimirResumen(reporte: Reporte): void {
       const prefijo = conPorcentaje
         ? `${(t.tasaInestabilidad * 100).toFixed(1).padStart(5)}%  |`
         : '        |';
+      const alta = t.altaInestabilidad ? '  [ALTA]' : '';
       const timeouts = t.otros > 0 ? `, ${t.otros} por timeout/interrupción` : '';
-      console.log(`${prefijo}  ${t.titulo}  (${t.passed} passed / ${t.failed} failed de ${t.totalCorridas}${timeouts})`);
+      console.log(`${prefijo}  ${t.titulo}  (${t.passed} passed / ${t.failed} failed de ${t.totalCorridas}${timeouts})${alta}`);
     }
   }
 
+  console.log(
+    `\n${reporte.resumen.altaInestabilidad} de ${reporte.resumen.flaky} tests flaky tienen alta inestabilidad (tasa >= ${(reporte.umbral * 100).toFixed(0)}%)`
+  );
   if (reporte.resumen.omitidos > 0) {
-    console.log(`\n(${reporte.resumen.omitidos} tests omitidos con skip: no se ejecutaron y no se analizaron)`);
+    console.log(`(${reporte.resumen.omitidos} tests omitidos con skip: no se ejecutaron y no se analizaron)`);
   }
 }
 
-// Si TODOS los tests analizados fallaron siempre, probablemente el problema es del entorno
 export function pareceFallaDeEntorno(reporte: Reporte): boolean {
   const analizados = reporte.tests.filter((t) => t.clasificacion !== 'excluido');
   return analizados.length > 1 && analizados.every((t) => t.clasificacion === 'fallo-determinista');

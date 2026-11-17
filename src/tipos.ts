@@ -32,6 +32,7 @@ export interface EstadisticaTest {
   otros: number;           // de los fallos, cuántos fueron timeout o interrupción
   tasaInestabilidad: number;
   clasificacion: Clasificacion;
+  altaInestabilidad: boolean; // flaky con tasa >= umbral (PruebaInestable)
 }
 
 export interface ConfigExclusion {
@@ -44,11 +45,13 @@ export interface ConfigExclusion {
 export interface Reporte {
   generado: string;
   repeticiones: number;
+  umbral: number;
   resumen: {
     flaky: number;
     falloDeterminista: number;
     estables: number;
     excluidos: number;
+    altaInestabilidad: number;
     omitidos: number;      // tests que nunca se ejecutaron (skip); no se analizan
   };
   tests: EstadisticaTest[];

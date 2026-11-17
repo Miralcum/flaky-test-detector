@@ -28,7 +28,7 @@ function filaTest(t: EstadisticaTest, posicion: number): string {
         <div class="titulo">${escaparHtml(t.titulo)}</div>
         <div class="archivo">${escaparHtml(path.basename(t.archivo))}${proyecto}</div>
       </td>
-      <td><span class="etiqueta ${t.clasificacion}">${etiquetas[t.clasificacion] ?? t.clasificacion}</span></td>
+      <td><span class="etiqueta ${t.clasificacion}">${etiquetas[t.clasificacion] ?? t.clasificacion}</span>${t.altaInestabilidad ? ` <span class="etiqueta fallo-determinista">Alta</span>` : ``}</td>
       <td class="num">${t.passed}</td>
       <td class="num">${t.failed}</td>
       <td class="num">${t.totalCorridas}</td>
