@@ -11,8 +11,8 @@ function escaparHtml(texto: string): string {
 
 const etiquetas: Record<string, string> = {
   'flaky': 'No determinista',
-  'estable': 'Estable',
-  'fallo-determinista': 'Fallo determinista',
+  'estable': 'Determinista',
+  'fallo-determinista': 'Determinista',
   'excluido': 'Excluido',
 };
 
@@ -145,8 +145,7 @@ export function generarHtml(reporte: Reporte): string {
 
     <div class="tarjetas">
       <div class="tarjeta flaky"><div class="valor">${reporte.resumen.flaky}</div><div class="nombre">No deterministas</div></div>
-      <div class="tarjeta fallo-determinista"><div class="valor">${reporte.resumen.falloDeterminista}</div><div class="nombre">Fallo determinista</div></div>
-      <div class="tarjeta estable"><div class="valor">${reporte.resumen.estables}</div><div class="nombre">Estables</div></div>
+      <div class="tarjeta estable"><div class="valor">${reporte.resumen.estables + reporte.resumen.falloDeterminista}</div><div class="nombre">Deterministas</div></div>
       <div class="tarjeta excluido"><div class="valor">${reporte.resumen.excluidos}</div><div class="nombre">Excluidos</div></div>
     </div>
 

@@ -104,8 +104,8 @@ export function analizar(corrida: Corrida, config: ConfigExclusion, umbral = 0.3
 export function imprimirResumen(reporte: Reporte): void {
   const secciones: [string, Clasificacion, boolean][] = [
     ['TESTS INESTABLES (FLAKY), ranking', 'flaky', true],
-    ['FALLOS DETERMINISTAS (bug real, no flaky)', 'fallo-determinista', false],
-    ['ESTABLES', 'estable', false],
+    ['DETERMINISTAS (siempre falla)', 'fallo-determinista', false],
+    ['DETERMINISTAS (siempre pasa)', 'estable', false],
     ['EXCLUIDOS POR CONFIGURACIÓN', 'excluido', false],
   ];
 
